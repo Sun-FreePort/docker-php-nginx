@@ -14,16 +14,22 @@ RUN apk add --no-cache \
   php81-curl \
   php81-dom \
   php81-fpm \
+  php81-fileinfo \
   php81-gd \
   php81-intl \
   php81-mbstring \
-  php81-mysqli \
+  php81-redis \
   php81-opcache \
   php81-openssl \
   php81-phar \
+  php81-pdo \
+  php81-pdo_mysql \
+  php81-pdo_sqlite \
   php81-session \
+  php81-tokenizer \
   php81-xml \
   php81-xmlreader \
+  php81-xmlwriter \
   php81-zlib \
   supervisor
 
@@ -42,6 +48,9 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
 RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
+
+# Install composer from the official image
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Switch to use a non-root user from here on
 USER nobody
